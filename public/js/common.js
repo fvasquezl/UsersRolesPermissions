@@ -70,7 +70,7 @@ function myAjax(url, method, form, data = '') {
     return true;
 }
 
-function deleteInfo(url) {
+function deleteInfo(url, $mytable) {
     Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -87,12 +87,11 @@ function deleteInfo(url) {
                 dataType: 'json',
             });
             request.done(function (data) {
-
-                Swal.fire(
-                    'Deleted!',
-                    data.message,
-                    'success'
-                );
+                Toast.fire({
+                    icon: 'success',
+                    title: data.message
+                })
+                $mytable.draw();
             });
             request.fail(function (jqXHR, textStatus, errorThrown) {
                 Swal.fire('Failed!', "There was something wrong", "warning");

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Permissions;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
+use Yajra\DataTables\Facades\DataTables;
 
 class PermissionController extends Controller
 {
@@ -13,13 +14,22 @@ class PermissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('view', new Permission);
 
-        return view('admin.permissions.index', [
-            'permissions' => Permission::all(),
-        ]);
+        if ($request->ajax()) {
+            $data = Permission::all();
+
+            return DataTables::of($data)
+                ->setRowId(function ($permission) {
+                    return $permission->id;
+                })->addColumn('action', function ($permission) {
+                    return view('admin.permissions.partials.buttons', compact('permission'));
+                })->rawColumns(['action'])->make(true);
+        }
+
+        return view('admin.permissions.index');
     }
 
 

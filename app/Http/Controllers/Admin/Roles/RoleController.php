@@ -7,6 +7,7 @@ use App\Http\Requests\Role\SaveRolesRequest;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Yajra\DataTables\Facades\DataTables;
 
 class RoleController extends Controller
 {
@@ -15,12 +16,25 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('view', new Role);
 
-        $roles = Role::all();
-        return view('admin.roles.index', compact('roles'));
+
+        if ($request->ajax()) {
+            $data = Role::all();
+
+            return DataTables::of($data)
+                ->setRowId(function ($role) {
+                    return $role->id;
+                })->editColumn('permissions', function ($role) {
+                    return $role->permissions->pluck('display_name')->implode(', ');
+                })->addColumn('action', function ($role) {
+                    return view('admin.roles.partials.buttons', compact('role'));
+                })->rawColumns(['action'])->make(true);
+        }
+
+        return view('admin.roles.index');
     }
 
     /**
@@ -55,10 +69,6 @@ class RoleController extends Controller
         if ($request->has('permissions')) {
             $role->givePermissionTo($request->permissions);
         }
-
-        // return redirect()
-        //     ->route('admin.roles.index')
-        //     ->with('info', 'El role fue creado correctamente');
 
         return response()->json([
             'success' => true,
@@ -106,10 +116,6 @@ class RoleController extends Controller
             'success' => true,
             'message' => 'Role updated'
         ], 200);
-
-        // return redirect()
-        //     ->route('admin.roles.edit', $role)
-        //     ->with('info', 'El role fue actualizado correctamente');
     }
 
     /**
@@ -124,7 +130,9 @@ class RoleController extends Controller
 
         $role->delete();
 
-        return redirect()->route('admin.roles.index')
-            ->with('info', 'Rol Eliminado con exito');
+        return response()->json([
+            'success' => true,
+            'message' => 'Role deleted successfully'
+        ], 200);
     }
 }

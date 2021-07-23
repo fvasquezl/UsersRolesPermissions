@@ -29,7 +29,7 @@
                 @can('view', new App\Models\User())
                     <li class="nav-item {{ request()->is('admin/users*') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <i class="nav-icon fas fa-user-cog"></i>
                             <p>
                                 Users
                                 <i class="right fas fa-angle-left"></i>
@@ -46,7 +46,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('admin.users.create') }}"
                                     class="{{ setActiveRoute('admin.users.create') }}">
-                                    <i class="fas fa-users-cog nav-icon"></i>
+                                    <i class="fas fa-user-plus nav-icon"></i>
                                     <p>Create Users</p>
                                 </a>
                             </li>
@@ -80,7 +80,7 @@
                     <li class="nav-item">
                         <a href="{{ route('admin.permissions.index') }}"
                             class="{{ setActiveRoute('admin.permissions.index') }}">
-                            <i class="fas fa-key nav-icon"></i>
+                            <i class="fas fa-user-lock nav-icon"></i>
                             <p>
                                 Permissions
                             </p>

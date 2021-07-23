@@ -4,7 +4,7 @@
 
     @include('layouts.partials.contentHeader',$info =[
     'title' =>'Roles',
-    'subtitle' => 'Administracion',
+    'subtitle' => 'Administration',
     'breadCrumbs' =>['users','index']
     ])
 @endsection
@@ -16,13 +16,13 @@
                 <div class="card mb-4 shadow-sm card-outline card-primary">
                     <div class="card-header ">
                         <h3 class="card-title mt-1">
-                            Listado de roles
+                            Roles List
                         </h3>
-                        @can('create', $roles->first())
+                        @can('create', new Spatie\Permission\Models\Role())
                             <div class="card-tools">
                                 <a href="{{ route('admin.roles.create') }}" class="btn btn-primary">
-                                    <i class="fa fa-plus"></i>
-                                    Crear Role
+                                    <i class="fa fa-user-tag"></i>
+                                    Create Role
                                 </a>
                             </div>
                         @endcan
@@ -39,36 +39,6 @@
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach ($roles as $role)
-                                    <tr>
-                                        <td>{{ $role->id }}</td>
-                                        <td>{{ $role->name }}</td>
-                                        <td>{{ $role->display_name }}</td>
-                                        <td>{{ $role->permissions->pluck('display_name')->implode(', ') }}</td>
-                                        <td>
-                                            @can('update', $role)
-                                                <a href="{{ route('admin.roles.edit', $role) }}"
-                                                    class="btn btn-sm btn-success">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </a>
-                                            @endcan
-
-                                            @can('delete', $role)
-                                                @if ($role->id !== 1)
-                                                    <form method="POST" action="{{ route('admin.roles.destroy', $role) }}"
-                                                        style="display:inline">
-                                                        @csrf @method('DELETE')
-                                                        <button class="btn btn-sm btn-danger"
-                                                            onclick="return confirm('Estas seguro de querer eliminar este rol')">
-                                                            <i class="fas fa-trash-alt"></i></button>
-                                                    </form>
-                                                @endif
-                                            @endcan
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -92,22 +62,29 @@
     <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js"></script>
-
+    <script src="{{ asset('js/common.js') }}"></script>
 
     <script>
-        $(document).ready(function() {
-            var table = $('#rolesTable').removeAttr('width').DataTable({
+        let $rolesTable;
+
+        $(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $rolesTable = $('#rolesTable').DataTable({
+                processing: true,
+                serverSide: true,
                 pageLength: 25,
                 lengthMenu: [
                     [25, 50, 100, -1],
                     [25, 50, 100, 'All']
                 ],
                 scrollY: "45vh",
-
                 dom: '"<\'row\'<\'col-md-6\'B><\'col-md-6\'f>>" +\n' +
                     '"<\'row\'<\'col-sm-12\'tr>>" +\n' +
                     '"<\'row\'<\'col-sm-12 col-md-5\'i ><\'col-sm-12 col-md-7\'p>>"',
-
                 buttons: {
                     dom: {
                         container: {
@@ -125,8 +102,48 @@
                         init: function(api, node, config) {
                             $(node).removeClass('btn-secondary buttons-html5')
                         },
-                    }, ],
+                    }],
                 },
+                ajax: {
+                    url: '{!! route('admin.roles.index') !!}',
+                },
+                columns: [{
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'display_name',
+                        name: 'display_name'
+                    },
+                    {
+                        data: 'permissions',
+                        name: 'permissions'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ],
+                columnDefs: [{
+                    targets: [0, 4],
+                    className: "text-center"
+                }],
+            });
+
+
+            $(document).on('click', '.delete-btn', function(e) {
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                let id = $(this).closest('tr').attr('id');
+                let url = "{{ route('admin.roles.destroy', ':id') }}";
+                url = url.replace(':id', id);
+                deleteInfo(url, $rolesTable)
             });
         });
     </script>

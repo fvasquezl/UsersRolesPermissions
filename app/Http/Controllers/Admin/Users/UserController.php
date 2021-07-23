@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
@@ -18,10 +19,27 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::allowed()->get();
-        return view('admin.users.index', compact('users'));
+
+        $this->authorize('view', new User);
+
+        if ($request->ajax()) {
+            $data = User::allowed()->get();
+
+            return DataTables::of($data)
+                ->setRowId(function ($user) {
+                    return $user->id;
+                })->editColumn('roles', function ($user) {
+                    return $user->getRoleNames()->implode(', ');
+                })->addColumn('created_at', function ($user) {
+                    return $user->created_at->toFormattedDateString();
+                })->addColumn('action', function ($user) {
+                    return view('admin.users.partials.buttons', compact('user'));
+                })->rawColumns(['action'])->make(true);
+        }
+
+        return view('admin.users.index');
     }
 
     /**
@@ -137,10 +155,8 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $this->authorize('delete', $user);
-        $user->delete();
 
-        // return redirect()->route('admin.users.index')
-        //     ->with('info', 'Usuario Eliminado con exito');
+        $user->delete();
 
         return response()->json([
             'success' => true,

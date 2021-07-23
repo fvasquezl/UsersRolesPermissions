@@ -24,7 +24,7 @@
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            {{-- <tbody>
                                 @foreach ($permissions as $permission)
                                     <tr>
                                         <td>{{ $permission->id }}</td>
@@ -40,7 +40,7 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                            </tbody>
+                            </tbody> --}}
                         </table>
                     </div>
                 </div>
@@ -62,22 +62,29 @@
     <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js"></script>
-
+    <script src="{{ asset('js/common.js') }}"></script>
 
     <script>
-        $(document).ready(function() {
-            var table = $('#permissionsTable').removeAttr('width').DataTable({
+        let $permissionsTable;
+
+        $(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $permissionsTable = $('#permissionsTable').DataTable({
+                processing: true,
+                serverSide: true,
                 pageLength: 25,
                 lengthMenu: [
                     [25, 50, 100, -1],
                     [25, 50, 100, 'All']
                 ],
                 scrollY: "45vh",
-
                 dom: '"<\'row\'<\'col-md-6\'B><\'col-md-6\'f>>" +\n' +
                     '"<\'row\'<\'col-sm-12\'tr>>" +\n' +
                     '"<\'row\'<\'col-sm-12 col-md-5\'i ><\'col-sm-12 col-md-7\'p>>"',
-
                 buttons: {
                     dom: {
                         container: {
@@ -91,9 +98,38 @@
                     buttons: [{
                         extend: 'pageLength',
                         titleAttr: 'Show Records',
-                        className: 'btn selectTable btn-primary',
+                        className: 'btn selectTable btn-dark',
+                        init: function(api, node, config) {
+                            $(node).removeClass('btn-secondary buttons-html5')
+                        },
                     }],
                 },
+                ajax: {
+                    url: '{!! route('admin.permissions.index') !!}',
+                },
+                columns: [{
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'display_name',
+                        name: 'display_name'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ],
+                columnDefs: [{
+                    targets: [0, 3],
+                    className: "text-center"
+                }],
             });
         });
     </script>

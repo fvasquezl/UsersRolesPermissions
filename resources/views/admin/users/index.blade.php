@@ -18,7 +18,7 @@
                         <h3 class="card-title mt-1">
                             Listado de Usuarios
                         </h3>
-                        @can('create', $users->first())
+                        @can('create', auth()->user())
                             <div class="card-tools">
                                 <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
                                     <i class="fa fa-plus"></i>
@@ -33,54 +33,13 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Nombre</th>
+                                    <th>Name</th>
                                     <th>Email</th>
                                     <th>Roles</th>
-                                    <th>Fecha de Creacion</th>
-                                    <th>Acciones</th>
+                                    <th>Created_at</th>
+                                    <th width="150px">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach ($users as $user)
-                                    <tr>
-                                        <td>{{ $user->id }}</td>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>{{ $user->getRoleNames()->implode(', ') }}</td>
-                                        <td>{{ $user->created_at->toFormattedDateString() }}</td>
-
-                                        <td class="text-center">
-                                            @can('view', $user)
-                                                <a href="{{ route('admin.users.show', $user) }}"
-                                                    class="btn btn-sm btn-primary">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                            @endcan
-
-                                            @can('update', $user)
-                                                <a href="{{ route('admin.users.edit', $user) }}"
-                                                    class="btn btn-sm btn-success">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </a>
-                                            @endcan
-
-                                            @can('delete', $user)
-                                                {{-- <form action="{{ route('admin.users.destroy', $user) }}" method="POST"
-                                                    style="display:inline">
-                                                    @csrf @method('DELETE') --}}
-                                                {{-- <button class="btn btn-sm btn-danger"
-                                                        onclick="return confirm('Estas seguro de querer eliminar este usuario')">
-                                                        <i class="fas fa-trash-alt"></i></button> --}}
-                                                {{-- </form> --}}
-
-                                                <button class="btn btn-sm btn-danger delete-btn">
-                                                    <i class="fas fa-trash-alt"></i></button>
-                                            @endcan
-
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -106,25 +65,26 @@
     <script src="{{ asset('js/common.js') }}"></script>
 
     <script>
-        $(document).ready(function() {
+        let $usersTable;
+
+        $(function() {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-
-            var table = $('#usersTable').DataTable({
+            $usersTable = $('#usersTable').DataTable({
+                processing: true,
+                serverSide: true,
                 pageLength: 25,
                 lengthMenu: [
                     [25, 50, 100, -1],
                     [25, 50, 100, 'All']
                 ],
                 scrollY: "45vh",
-
                 dom: '"<\'row\'<\'col-md-6\'B><\'col-md-6\'f>>" +\n' +
                     '"<\'row\'<\'col-sm-12\'tr>>" +\n' +
                     '"<\'row\'<\'col-sm-12 col-md-5\'i ><\'col-sm-12 col-md-7\'p>>"',
-
                 buttons: {
                     dom: {
                         container: {
@@ -144,18 +104,52 @@
                         },
                     }],
                 },
+                ajax: {
+                    url: '{!! route('admin.users.index') !!}',
+                },
+                columns: [{
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        "data": "roles",
+                        name: 'roles'
+                    },
+                    {
+                        data: 'created_at',
+                        name: 'created_at'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ],
+                columnDefs: [{
+                    targets: [0, 3, 4, 5],
+                    className: "text-center"
+                }],
             });
-        });
 
-        $('.delete-btn').on('click', function(e) {
-            e.stopPropagation();
-            let id = $(this).closest('tr').attr('id');
-            console.log($(this).rowId);
-            let url = "{{ route('admin.users.destroy', ':id') }}";
-            url = url.replace(':id', id);
-            deleteInfo(url);
 
-            // window.location.href = "{{ route('admin.users.index') }}";
+            $(document).on('click', '.delete-btn', function(e) {
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                let id = $(this).closest('tr').attr('id');
+                let url = "{{ route('admin.users.destroy', ':id') }}";
+                url = url.replace(':id', id);
+                deleteInfo(url, $usersTable)
+
+            });
         });
     </script>
 @endpush
