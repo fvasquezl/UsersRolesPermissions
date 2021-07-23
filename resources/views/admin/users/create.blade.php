@@ -3,8 +3,8 @@
 
 @section('content-header')
     @include('layouts.partials.contentHeader',$info =[
-    'title' =>'Usuarios',
-    'subtitle' => 'Administracion',
+    'title' =>'Users',
+    'subtitle' => 'Administration',
     'breadCrumbs' =>['users','create']
     ])
 @stop
@@ -19,7 +19,7 @@
             <div class="col-md-6">
                 <div class="card card-outline card-primary">
                     <div class="card-header">
-                        <h3>Registro de Usuarios</h3>
+                        <h3>Create Users</h3>
                     </div>
                     <div class="card-body">
                         <form method="POST" id="createUsersForm" name="createUsersForm"
@@ -27,7 +27,7 @@
                             @csrf
 
                             <div class="form-group">
-                                <label for="name">Nombre:</label>
+                                <label for="name">Name:</label>
                                 <input name="name" value="{{ old('name') }}"
                                     class="form-control  @error('name') is-invalid @enderror">
                                 @error('name')
@@ -38,7 +38,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="username">Nombre de usuario:</label>
+                                <label for="username">Username:</label>
                                 <input name="username" value="{{ old('username') }}"
                                     class="form-control  @error('username') is-invalid @enderror">
                                 @error('username')
@@ -60,19 +60,20 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-4">
-                                    <label>Roles</label>
+                                    <label>Roles:</label>
                                     @include('admin.roles.partials.checkboxes')
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label>Permisos</label>
+                                    <label>Permissions:</label>
                                     @include('admin.permissions.partials.checkboxes',['model'=> $user])
                                 </div>
                             </div>
 
-                            <span class="help-block">La contrasena sera generada y enviada al nuevo usuario via email</span>
+                            <span class="help-block">The password will be generated and sent to the new user via
+                                email</span>
 
-                            <button class="btn btn-primary btn-block">Crear Usuario</button>
+                            <button class="btn btn-primary btn-block">Create User</button>
                         </form>
                     </div>
                 </div>

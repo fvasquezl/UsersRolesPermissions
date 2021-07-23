@@ -3,8 +3,8 @@
 
 @section('content-header')
     @include('layouts.partials.contentHeader',$info =[
-    'title' =>'Permisos',
-    'subtitle' => 'Edicion',
+    'title' =>'Permissions',
+    'subtitle' => 'Administration',
     'breadCrumbs' =>['permissions','edit']
     ])
 @stop
@@ -14,17 +14,20 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="card card-outline card-primary">
+                    <div class="card-header">
+                        <h3>Permission Info</h3>
+                    </div>
                     <div class="card-body">
                         <form method="PUT" id="permissionsForm" name="permissionsForm"
                             action="{{ route('admin.permissions.update', $permission) }}" enctype="multipart/form-data">
                             <div class="form-group">
-                                <label for="name">Identificador:</label>
+                                <label for="name">Identifier:</label>
                                 <input name="name" value="{{ $permission->name }}" class="form-control" disabled>
                             </div>
 
 
                             <div class="form-group">
-                                <label for="display_name">Nombre:</label>
+                                <label for="display_name">Name:</label>
                                 <input name="display_name" value="{{ old('display_name', $permission->display_name) }}"
                                     class="form-control">
 
@@ -34,7 +37,7 @@
 
                             </div>
 
-                            <button class="btn btn-primary btn-block">Actualizar Permiso</button>
+                            <button class="btn btn-primary btn-block">Update Permission</button>
                         </form>
                     </div>
                 </div>

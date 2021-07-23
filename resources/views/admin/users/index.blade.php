@@ -3,8 +3,8 @@
 @section('content-header')
 
     @include('layouts.partials.contentHeader',$info =[
-    'title' =>'Usuarios',
-    'subtitle' => 'Administracion',
+    'title' =>'Users',
+    'subtitle' => 'Administration',
     'breadCrumbs' =>['users','index']
     ])
 @endsection
@@ -16,13 +16,13 @@
                 <div class="card mb-4 shadow-sm card-outline card-success">
                     <div class="card-header">
                         <h3 class="card-title mt-1">
-                            Listado de Usuarios
+                            Users List
                         </h3>
                         @can('create', auth()->user())
                             <div class="card-tools">
                                 <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
-                                    <i class="fa fa-plus"></i>
-                                    Crear Usuario
+                                    <i class="fa fa-user-plus"></i>
+                                    Create User
                                 </a>
                             </div>
                         @endcan

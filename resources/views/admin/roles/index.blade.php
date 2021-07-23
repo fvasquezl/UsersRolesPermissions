@@ -21,7 +21,7 @@
                         @can('create', new Spatie\Permission\Models\Role())
                             <div class="card-tools">
                                 <a href="{{ route('admin.roles.create') }}" class="btn btn-primary">
-                                    <i class="fa fa-user-tag"></i>
+                                    <i class="fa fa-user-secret"></i>
                                     Create Role
                                 </a>
                             </div>
@@ -33,10 +33,10 @@
                             <thead>
                                 <tr>
                                     <th>id</th>
-                                    <th>Identificador</th>
-                                    <th>Nombre</th>
-                                    <th>Permisos</th>
-                                    <th>Acciones</th>
+                                    <th>Identifier</th>
+                                    <th>Name</th>
+                                    <th>Permissions</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                         </table>

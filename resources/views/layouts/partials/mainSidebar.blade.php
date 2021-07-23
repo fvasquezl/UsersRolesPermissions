@@ -66,7 +66,7 @@
                 @can('view', new \Spatie\Permission\Models\Role())
                     <li class="nav-item">
                         <a href="{{ route('admin.roles.index') }}" class="{{ setActiveRoute('admin.roles.index') }}">
-                            <i class="fas fa-user-secret nav-icon"></i>
+                            <i class="fas fa-user-tag nav-icon"></i>
                             <p>
                                 Roles
                             </p>

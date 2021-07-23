@@ -2,8 +2,8 @@
 
 @section('content-header')
     @include('layouts.partials.contentHeader',$info =[
-    'title' =>'Usuarios',
-    'subtitle' => 'Administracion',
+    'title' =>'Users',
+    'subtitle' => 'Administration',
     'breadCrumbs' =>['users','show']
     ])
 @stop
@@ -29,14 +29,13 @@
                                 <i class="fas fa-envelope"></i> <b>Email</b> <a class="float-right">{{ $user->email }}</a>
                             </li>
                             <li class="list-group-item">
-                                <i class="fas fa-calendar-alt"></i> <b>Usuario desde:</b> <a
+                                <i class="fas fa-calendar-alt"></i> <b>User from:</b> <a
                                     class="float-right">{{ $user->present()->userCreatedat() }}</a>
                             </li>
 
                         </ul>
 
-                        <a href="{{ route('admin.users.edit', $user) }}"
-                            class="btn btn-primary btn-block"><b>Editar</b></a>
+                        <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-primary btn-block"><b>Edit</b></a>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -55,14 +54,14 @@
                             @if ($role->permissions->count())
                                 <br>
                                 <small class="text-muted">
-                                    Permisos: {{ $role->permissions->pluck('name')->implode(', ') }}
+                                    Permissions: {{ $role->permissions->pluck('name')->implode(', ') }}
                                 </small>
                             @endif
                             @unless($loop->last)
                                 <hr>
                             @endunless
                         @empty
-                            <small class="text-muted">No tiene ningun rol asociado</small>
+                            <small class="text-muted">It has no associated role</small>
                         @endforelse
                     </div>
                     <!-- /.card-body -->
@@ -74,7 +73,7 @@
                 <!-- About Me Box -->
                 <div class="card card-primary card-outline">
                     <div class="card-header">
-                        <h3 class="card-title">Permisos adicionales</h3>
+                        <h3 class="card-title">Additional permissions</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -84,7 +83,7 @@
                                 <hr>
                             @endunless
                         @empty
-                            <small class="text-muted">No tiene permisos adicionales</small>
+                            <small class="text-muted">Has no additional permissions</small>
 
                         @endforelse
                     </div>

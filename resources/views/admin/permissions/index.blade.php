@@ -19,28 +19,11 @@
                             <thead>
                                 <tr>
                                     <th>id</th>
-                                    <th>Identificador</th>
-                                    <th>Nombre</th>
-                                    <th>Acciones</th>
+                                    <th>Identifier</th>
+                                    <th>Name</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
-                            {{-- <tbody>
-                                @foreach ($permissions as $permission)
-                                    <tr>
-                                        <td>{{ $permission->id }}</td>
-                                        <td>{{ $permission->name }}</td>
-                                        <td>{{ $permission->display_name }}</td>
-                                        <td class="text-center">
-                                            @can('update', $permission)
-                                                <a href="{{ route('admin.permissions.edit', $permission) }}"
-                                                    class="btn btn-sm btn-success">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </a>
-                                            @endcan
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody> --}}
                         </table>
                     </div>
                 </div>

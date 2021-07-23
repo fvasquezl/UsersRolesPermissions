@@ -4,7 +4,7 @@
 @section('content-header')
     @include('layouts.partials.contentHeader',$info =[
     'title' =>'Roles',
-    'subtitle' => 'Administracion',
+    'subtitle' => 'Administration',
     'breadCrumbs' =>['roles','edit']
     ])
 @stop
@@ -15,16 +15,15 @@
             <div class="col-md-6">
                 <div class="card card-outline card-primary">
                     <div class="card-header">
-                        <h3>Actualizar Role</h3>
+                        <h3>Role Info</h3>
                     </div>
                     <div class="card-body">
                         <form method="PUT" id="updateRolesForm" name="updateRolesForm"
                             action="{{ route('admin.roles.update', $role) }}">
-                            {{-- @method('PUT') --}}
 
                             @include('admin.roles.partials.form')
 
-                            <button class="btn btn-primary btn-block">Actualizar Role</button>
+                            <button class="btn btn-primary btn-block">Update Role</button>
                         </form>
                     </div>
                 </div>

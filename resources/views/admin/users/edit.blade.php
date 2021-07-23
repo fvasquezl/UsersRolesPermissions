@@ -2,8 +2,8 @@
 
 @section('content-header')
     @include('layouts.partials.contentHeader',$info =[
-    'title' =>'Usuarios',
-    'subtitle' => 'Edicion',
+    'title' =>'Users',
+    'subtitle' => 'Administration',
     'breadCrumbs' =>['users','edit']
     ])
 @stop
@@ -14,7 +14,7 @@
             <div class="col-md-6">
                 <div class="card card-outline card-primary">
                     <div class="card-header">
-                        <h3>Datos Personales</h3>
+                        <h3>Personal Info</h3>
                     </div>
                     <div class="card-body">
                         <form method="PUT" id="updateUserForm" name="updateUserForm"
@@ -23,7 +23,7 @@
                         @method('PUT') --}}
 
                             <div class="form-group">
-                                <label for="name">Nombre:</label>
+                                <label for="name">Name:</label>
                                 <input name="name" value="{{ old('name', $user->name) }}" class="form-control">
 
                                 <span class="invalid-feedback" role="alert">
@@ -33,7 +33,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="username">Nombre de Usuario:</label>
+                                <label for="username">Username:</label>
                                 <input name="username" value="{{ old('username', $user->username) }}"
                                     class="form-control">
 
@@ -54,9 +54,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="password">Contrasena:</label>
+                                <label for="password">Password:</label>
                                 <input name="password" type="password" class="form-control" placeholder="Contrasena">
-                                <span class="text-muted">Dejar en blanco si no se quiere cambiar la contrasena</span>
+                                <span class="text-muted">Leave blank if you do not want to change the password</span>
 
                                 <span class="invalid-feedback" role="alert">
                                     <strong></strong>
@@ -65,7 +65,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="password_confirmation">Repita la contrasena:</label>
+                                <label for="password_confirmation">Password confirmation:</label>
                                 <input name="password_confirmation" type="password" class="form-control"
                                     placeholder="Repite la contrasena">
 
@@ -76,7 +76,7 @@
 
                             </div>
 
-                            <button class="btn btn-primary btn-block">Actualizar Usuario</button>
+                            <button class="btn btn-primary btn-block">Update User</button>
                         </form>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
 
                             @include('admin.roles.partials.checkboxes')
 
-                            <button class="btn btn-primary btn-block">Actualizar roles</button>
+                            <button class="btn btn-primary btn-block">Update roles</button>
                         </form>
                     @else
                         <ul class="list-group">
@@ -106,7 +106,7 @@
                                 </li>
                             @empty
                                 <li class="list-group-item">
-                                    No tiene roles
+                                    Has no roles
                                 </li>
                             @endforelse
                         </ul>
@@ -115,7 +115,7 @@
                 </div>
                 <div class="card card-outline card-primary">
                     <div class="card-header">
-                        <h3>Permisos</h3>
+                        <h3>Permissions</h3>
                     </div>
                     <div class="card-body">
                         @role('Admin')
@@ -124,7 +124,7 @@
 
                             @include('admin.permissions.partials.checkboxes',['model'=> $user])
 
-                            <button class="btn btn-primary btn-block">Actualizar permisos</button>
+                            <button class="btn btn-primary btn-block">Update Permissions</button>
                         </form>
                     @else
                         <ul class="list-group">
@@ -134,7 +134,7 @@
                                 </li>
                             @empty
                                 <li class="list-group-item">
-                                    No tiene permisos
+                                    Has no permissions
                                 </li>
                             @endforelse
                         </ul>

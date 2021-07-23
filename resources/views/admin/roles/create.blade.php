@@ -3,7 +3,7 @@
 @section('content-header')
     @include('layouts.partials.contentHeader',$info =[
     'title' =>'Roles',
-    'subtitle' => 'Administracion',
+    'subtitle' => 'Administration',
     'breadCrumbs' =>['roles','create']
     ])
 @stop
@@ -26,7 +26,7 @@
             <div class="col-md-6">
                 <div class="card card-outline card-primary">
                     <div class="card-header">
-                        <h3>Registro de Roles</h3>
+                        <h3>Create Roles</h3>
                     </div>
                     <div class="card-body">
                         <form method="POST" id="createRolesForm" name="createRolesForm"
@@ -34,7 +34,7 @@
 
                             @include('admin.roles.partials.form')
 
-                            <button class="btn btn-primary btn-block">Crear Role</button>
+                            <button class="btn btn-primary btn-block">Create Role</button>
                         </form>
                     </div>
                 </div>
