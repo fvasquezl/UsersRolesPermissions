@@ -19,9 +19,6 @@
                     <div class="card-body">
                         <form method="PUT" id="updateUserForm" name="updateUserForm"
                             action="{{ route('admin.users.update', $user->id) }}">
-                            {{-- @csrf
-                        @method('PUT') --}}
-
                             <div class="form-group">
                                 <label for="name">Name:</label>
                                 <input name="name" value="{{ old('name', $user->name) }}" class="form-control">
@@ -91,8 +88,6 @@
                         @role('Admin')
                         <form method="PUT" id="updateRolesForm" name="updateRolesForm"
                             action="{{ route('admin.users.roles.update', $user) }}">
-                            {{-- @csrf
-                            @method('PUT') --}}
 
                             @include('admin.roles.partials.checkboxes')
 

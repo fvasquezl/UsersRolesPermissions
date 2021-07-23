@@ -28,35 +28,28 @@
 
                             <div class="form-group">
                                 <label for="name">Name:</label>
-                                <input name="name" value="{{ old('name') }}"
-                                    class="form-control  @error('name') is-invalid @enderror">
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input name="name" value="{{ old('name') }}" class="form-control">
+                                <span class="invalid-feedback" role="alert">
+                                    <strong></strong>
+                                </span>
                             </div>
 
                             <div class="form-group">
                                 <label for="username">Username:</label>
-                                <input name="username" value="{{ old('username') }}"
-                                    class="form-control  @error('username') is-invalid @enderror">
-                                @error('username')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input name="username" value="{{ old('username') }}" class="form-control">
+                                <span class="invalid-feedback" role="alert">
+                                    <strong></strong>
+                                </span>
+
                             </div>
 
                             <div class="form-group">
                                 <label for="email">Email:</label>
-                                <input name="email" value="{{ old('email') }}"
-                                    class="form-control @error('email') is-invalid @enderror">
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input name="email" value="{{ old('email') }}" class="form-control">
+                                <span class="invalid-feedback" role="alert">
+                                    <strong></strong>
+                                </span>
+
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-4">
