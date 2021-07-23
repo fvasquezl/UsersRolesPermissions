@@ -1,0 +1,62 @@
+// Fonts
+// @import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700");
+@import url("https://fonts.googleapis.com/css?family=Ubuntu&display=swap");
+
+
+// Variables
+@import 'variables';
+
+$fa-font-path:"../webfonts";
+
+// Bootstrap
+ @import '~bootstrap/scss/bootstrap';
+
+//AdminLTE
+
+@import '~admin-lte/dist/css/adminlte.min.css';
+
+
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+
+
+.dropdown-menu {
+width: 140px;
+}
+
+
+.colored-toast.swal2-icon-success {
+    background-color: #40945f !important;
+}
+
+.colored-toast.swal2-icon-error {
+    background-color: #f27474 !important;
+}
+
+.colored-toast.swal2-icon-warning {
+    background-color: #f8bb86 !important;
+}
+
+.colored-toast.swal2-icon-info {
+    background-color: #3fc3ee !important;
+}
+
+.colored-toast.swal2-icon-question {
+    background-color: #87adbd !important;
+}
+
+.colored-toast .swal2-title {
+    color: white;
+}
+
+.colored-toast .swal2-close {
+    color: white;
+}
+
+.colored-toast .swal2-content {
+    color: white;
+}
+
