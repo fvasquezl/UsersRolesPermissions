@@ -13,19 +13,20 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 my-3">
-                <div class="card mb-4 shadow-sm card-outline card-primary">
-                    <div class="card-header ">
-                        <h3 class="card-title mt-1">
-                            Roles List
-                        </h3>
-                        @can('create', new Spatie\Permission\Models\Role())
-                            <div class="card-tools">
-                                <a href="{{ route('admin.roles.create') }}" class="btn btn-primary">
-                                    <i class="fa fa-user-secret"></i>
-                                    Create Role
+                <div class="card mb-4 shadow-sm card-outline card-success">
+
+                    <div class="card-header">
+                        <h3 class="card-title">Roles Index</h3>
+                        <div class="card-tools">
+                            @can('create', new Spatie\Permission\Models\Role())
+                                <a href="{{ route('admin.roles.create') }}" class="btn btn-sm btn-tool">
+                                    <i class="fas fa-user-secret"> Add Role</i>
                                 </a>
-                            </div>
-                        @endcan
+                            @endcan
+                            <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="card-body">

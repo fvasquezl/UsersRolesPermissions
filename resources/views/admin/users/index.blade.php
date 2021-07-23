@@ -14,20 +14,20 @@
         <div class="row ">
             <div class="col-lg-12 my-3">
                 <div class="card mb-4 shadow-sm card-outline card-success">
-                    <div class="card-header">
-                        <h3 class="card-title mt-1">
-                            Users List
-                        </h3>
-                        @can('create', auth()->user())
-                            <div class="card-tools">
-                                <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
-                                    <i class="fa fa-user-plus"></i>
-                                    Create User
-                                </a>
-                            </div>
-                        @endcan
-                    </div>
 
+                    <div class="card-header">
+                        <h3 class="card-title">Users Index</h3>
+                        <div class="card-tools">
+                            @can('create', auth()->user())
+                                <a href="{{ route('admin.users.create') }}" class="btn btn-sm btn-tool">
+                                    <i class="fas fa-user-plus"> Add User</i>
+                                </a>
+                            @endcan
+                            <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <table class="table table-striped table-hover table-bordered" id=usersTable>
                             <thead>
@@ -82,28 +82,28 @@
                     [25, 50, 100, 'All']
                 ],
                 scrollY: "45vh",
-                dom: '"<\'row\'<\'col-md-6\'B><\'col-md-6\'f>>" +\n' +
-                    '"<\'row\'<\'col-sm-12\'tr>>" +\n' +
-                    '"<\'row\'<\'col-sm-12 col-md-5\'i ><\'col-sm-12 col-md-7\'p>>"',
-                buttons: {
-                    dom: {
-                        container: {
-                            tag: 'div',
-                            className: 'flexcontent'
-                        },
-                        buttonLiner: {
-                            tag: null
-                        }
-                    },
-                    buttons: [{
-                        extend: 'pageLength',
-                        titleAttr: 'Show Records',
-                        className: 'btn selectTable btn-dark',
-                        init: function(api, node, config) {
-                            $(node).removeClass('btn-secondary buttons-html5')
-                        },
-                    }],
-                },
+                // dom: '"<\'row\'<\'col-md-6\'B><\'col-md-6\'f>>" +\n' +
+                //     '"<\'row\'<\'col-sm-12\'tr>>" +\n' +
+                //     '"<\'row\'<\'col-sm-12 col-md-5\'i ><\'col-sm-12 col-md-7\'p>>"',
+                // buttons: {
+                //     dom: {
+                //         container: {
+                //             tag: 'div',
+                //             className: 'flexcontent'
+                //         },
+                //         buttonLiner: {
+                //             tag: null
+                //         }
+                //     },
+                //     buttons: [{
+                //         extend: 'pageLength',
+                //         titleAttr: 'Show Records',
+                //         className: 'btn selectTable btn-dark',
+                //         init: function(api, node, config) {
+                //             $(node).removeClass('btn-secondary buttons-html5')
+                //         },
+                //     }],
+                // },
                 ajax: {
                     url: '{!! route('admin.users.index') !!}',
                 },
