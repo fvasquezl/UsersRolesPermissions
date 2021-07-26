@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin\Roles;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Role\SaveRolesRequest;
+use App\Http\Requests\Role\RoleRequest;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -57,18 +57,14 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\Role\RoleRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SaveRolesRequest $request)
+    public function store(RoleRequest $request)
     {
         $this->authorize('create', new Role);
 
-        $role = Role::create($request->validated());
-
-        if ($request->has('permissions')) {
-            $role->givePermissionTo($request->permissions);
-        }
+        $request->createRole();
 
         return response()->json([
             'success' => true,
@@ -96,21 +92,16 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\Role\RoleRequest  $request
      * @param  Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(SaveRolesRequest $request, Role $role)
+    public function update(RoleRequest $request, Role $role)
     {
+
         $this->authorize('update', $role);
 
-        $role->update($request->validated());
-
-        $role->permissions()->detach();
-
-        if ($request->has('permissions')) {
-            $role->givePermissionTo($request->permissions);
-        }
+        $request->updateRole($role);
 
         return response()->json([
             'success' => true,

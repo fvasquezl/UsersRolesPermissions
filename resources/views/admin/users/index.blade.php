@@ -34,6 +34,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
+                                    <th>Username</th>
                                     <th>Email</th>
                                     <th>Roles</th>
                                     <th>Created_at</th>
@@ -114,6 +115,10 @@
                     {
                         data: 'name',
                         name: 'name'
+                    },
+                    {
+                        data: 'username',
+                        name: 'username'
                     },
                     {
                         data: 'email',

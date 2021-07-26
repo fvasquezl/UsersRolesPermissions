@@ -14,8 +14,14 @@
             <div class="col-md-6">
                 <div class="card card-outline card-primary">
                     <div class="card-header">
-                        <h3>Personal Info</h3>
+                        <h3 class="card-title">Personal Info</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
                     </div>
+
                     <div class="card-body">
                         <form method="PUT" id="updateUserForm" name="updateUserForm"
                             action="{{ route('admin.users.update', $user->id) }}">
@@ -82,7 +88,12 @@
             <div class="col-md-6">
                 <div class="card card-outline card-primary">
                     <div class="card-header">
-                        <h3>Roles</h3>
+                        <h3 class="card-title">Roles</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="card-body">
                         @role('Admin')
@@ -110,7 +121,12 @@
                 </div>
                 <div class="card card-outline card-primary">
                     <div class="card-header">
-                        <h3>Permissions</h3>
+                        <h3 class="card-title">Permissions</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="card-body">
                         @role('Admin')

@@ -66,9 +66,5 @@ class PermissionController extends Controller
             'success' => true,
             'message' => 'Permission updated'
         ], 200);
-
-        // return redirect()
-        //     ->route('admin.permissions.edit', $permission)
-        //     ->with('info', 'El Permiso ha sido actualizado');
     }
 }

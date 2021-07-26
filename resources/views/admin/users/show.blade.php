@@ -80,11 +80,10 @@
                         @forelse ($user->permissions as $permission)
                             <strong>{{ $permission->name }}</strong>
                             @unless($loop->last)
-                                <hr>
+                                <br>
                             @endunless
                         @empty
                             <small class="text-muted">Has no additional permissions</small>
-
                         @endforelse
                     </div>
                     <!-- /.card-body -->

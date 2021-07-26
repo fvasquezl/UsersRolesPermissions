@@ -15,7 +15,12 @@
             <div class="col-md-6">
                 <div class="card card-outline card-primary">
                     <div class="card-header">
-                        <h3>Permission Info</h3>
+                        <h3 class="card-title">Permissions Info</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="card-body">
                         <form method="PUT" id="permissionsForm" name="permissionsForm"

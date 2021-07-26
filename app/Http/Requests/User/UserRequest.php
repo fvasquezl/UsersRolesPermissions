@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests\User;
 
+use App\Events\UserWasCreated;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 
-class UpdateRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,19 +29,45 @@ class UpdateRequest extends FormRequest
     {
         $rules =  [
             'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'string', 'max:50', Rule::unique('users')->ignore($this->user)],
+            'username' => ['required', 'string', 'max:50', Rule::unique('users')->ignore($this->user)],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($this->user)],
-            //  'departments'=>['required'],
-            //  'roles' =>['required']
         ];
 
+        if ($this->method() != 'PUT' or  $this->method() != 'PATCH') {
 
-        if ($this->filled('password')) {
-            $rules['password'] = ['confirmed', 'min:6'];
+            if ($this->filled('password')) {
+                $rules['password'] = ['confirmed', 'min:6'];
+            }
         }
 
         return $rules;
     }
+
+
+    public function createUser()
+    {
+        $user = new User();
+
+        $user->fill([
+            'name' => $this->name,
+            'username' => $this->username,
+            'email' => $this->email,
+            'password' => $password = Str::random(8),
+        ]);
+
+        $user->save();
+
+        if ($this->filled('roles')) {
+            $user->assignRole($this->roles);
+        }
+
+        if ($this->filled('permissions')) {
+            $user->givePermissionTo($this->permissions);
+        }
+
+        UserWasCreated::dispatch($user, $password);
+    }
+
 
     /**
      * @param $user
@@ -55,12 +84,5 @@ class UpdateRequest extends FormRequest
             $user->password = $this->password;
         }
         $user->save();
-
-        //Update Roles
-        //   $user->roles()->sync($this->roles);
-
-        //Update Departments
-        //  $user->departments()->sync($this->departments);
-
     }
 }

@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Admin\Users;
 
-use App\Events\UserWasCreated;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\UpdateRequest;
+use App\Http\Requests\User\UserRequest;
 use App\Models\User;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -64,32 +62,14 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\User\UserRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         $this->authorize('create', new User);
 
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', 'unique:users'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        ]);
-
-        $data['password'] = Str::random(8);
-
-        $user = User::create($data);
-
-        if ($request->filled('roles')) {
-            $user->assignRole($request->roles);
-        }
-
-        if ($request->filled('permissions')) {
-            $user->givePermissionTo($request->permissions);
-        }
-
-        UserWasCreated::dispatch($user, $data['password']);
+        $request->createUser();
 
         return response()->json([
             'success' => true,
@@ -130,11 +110,11 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\UpdateRequest  $request
+     * @param  App\Http\Requests\User\UserRequest  $request
      * @param  int  User $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRequest $request, User $user)
+    public function update(UserRequest $request, User $user)
     {
         $this->authorize('update', $user);
 
